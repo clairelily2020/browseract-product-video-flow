@@ -1,0 +1,428 @@
+📄 Content Extraction & Documents
+Automatically extract, aggregate, and process content from websites and documents.
+Overview
+Content Extraction & Documents is a comprehensive category for automating content collection, processing, and management tasks. Whether you need to gather articles, aggregate information from multiple sources, or automatically process documents, this category provides powerful workflows for intelligent content handling.
+🎯 Use Cases
+Content Aggregation
+
+Collect articles and news from multiple websites
+Aggregate blog posts by topic or author
+Centralize content from different sources
+Monitor industry publications and updates
+
+Knowledge Management
+
+Extract and organize information for knowledge bases
+Build internal documentation automatically
+Collect research materials from web sources
+Maintain up-to-date information repositories
+
+Data Extraction
+
+Extract structured data from unstructured content
+Pull information tables from web pages
+Gather contact information and metadata
+Collect product descriptions and specifications
+
+Content Processing
+
+Auto-generate summaries and abstracts
+Extract key information and highlights
+Format content for different platforms
+Clean and standardize content formats
+
+Document Management
+
+Organize documents by category
+Extract metadata from files
+Automate document processing workflows
+Create searchable content libraries
+
+Content Curation
+
+Find and collect relevant articles
+Build curated content collections
+Filter and prioritize information
+Create themed content feeds
+
+
+💡 What You Can Do
+Article & Content Extraction
+
+✅ Automatically extract full article text from websites
+✅ Capture article metadata (title, author, date, etc.)
+✅ Remove ads, popups, and unnecessary elements
+✅ Preserve article structure and formatting
+✅ Handle JavaScript-rendered content
+✅ Extract images and media along with text
+
+Content Aggregation
+
+✅ Collect content from multiple sources automatically
+✅ Merge and deduplicate articles
+✅ Organize by category or topic
+✅ Create RSS feeds from any website
+✅ Monitor updates across multiple sites
+✅ Combine data from different formats
+
+Text Processing
+
+✅ Automatically generate summaries and abstracts
+✅ Extract key information and main points
+✅ Perform sentiment analysis
+✅ Identify and extract entities (names, dates, places)
+✅ Translate content automatically
+✅ Format text for specific platforms
+
+Document Processing
+
+✅ Extract data from PDFs and documents
+✅ Convert documents to standard formats
+✅ Extract tables and structured data
+✅ Split large documents into sections
+✅ Maintain formatting during processing
+✅ Batch process multiple documents
+
+Information Extraction
+
+✅ Pull structured data from unstructured text
+✅ Extract contact information (emails, phone numbers)
+✅ Identify and extract key facts
+✅ Parse addresses and locations
+✅ Extract prices and product information
+✅ Capture dates and time information
+
+Content Organization
+
+✅ Automatically categorize content
+✅ Tag content based on keywords
+✅ Create searchable indexes
+✅ Build content hierarchies
+✅ Organize by metadata
+✅ Create cross-referenced collections
+
+
+🚀 Quick Start
+Option 1: Extract from Websites
+1. Provide website URLs or RSS feeds
+2. Configure extraction rules
+3. Set extraction frequency
+4. Choose output format (JSON, CSV, database)
+5. Start collection
+Option 2: Process Existing Documents
+1. Upload or point to documents
+2. Define extraction templates
+3. Configure processing rules
+4. Choose output destination
+5. Run batch processing
+Option 3: Set Up Continuous Monitoring
+1. Add source websites or feeds
+2. Define what to extract
+3. Set update frequency
+4. Configure notifications
+5. Monitor automatically
+
+📊 Use Cases by Industry
+📰 Media & Publishing
+
+Aggregate articles from competitor publications
+Monitor industry news and trends
+Collect research materials
+Build content libraries
+Create automated newsletters
+
+🎓 Education & Research
+
+Extract research papers and articles
+Collect academic content
+Build resource libraries
+Monitor new publications
+Organize learning materials
+
+💼 Business & Management
+
+Extract business intelligence from websites
+Monitor market news
+Collect competitive information
+Gather industry reports
+Track business developments
+
+📱 Marketing & Growth
+
+Extract lead information from websites
+Collect marketing content ideas
+Monitor brand mentions
+Gather competitor marketing content
+Build content inspiration libraries
+
+🏢 Enterprise & Operations
+
+Extract data for business processes
+Process contracts and agreements
+Gather compliance information
+Monitor vendor and partner websites
+Automate document intake
+
+🔬 Research & Analysis
+
+Extract data for analysis
+Collect research materials
+Organize findings
+Monitor relevant publications
+Build research databases
+
+
+🎓 Common Workflows
+Blog Article Aggregation
+Automatically collect articles from multiple blogs, extract key information, and store in a database.
+Typical Steps:
+
+Monitor blog RSS feeds or websites
+Extract article content and metadata
+Process and clean text
+Store in database or spreadsheet
+Send notifications on new articles
+
+Use Cases:
+
+Industry news monitoring
+Competitor blog tracking
+Content research
+Knowledge base building
+
+News Aggregation System
+Create an automated news aggregator that monitors multiple news sources and extracts relevant articles.
+Typical Steps:
+
+Monitor news websites and APIs
+Filter articles by keywords
+Extract full article content
+Generate summaries
+Organize by topic
+
+Use Cases:
+
+News monitoring
+Trend detection
+Topic-specific news collection
+Automated briefings
+
+Research Paper Extraction
+Automatically collect and organize research papers from academic sources.
+Typical Steps:
+
+Search academic databases
+Extract paper metadata and abstracts
+Download full papers
+Extract citations and references
+Organize by topic and author
+
+Use Cases:
+
+Literature review automation
+Research tracking
+Academic library building
+Citation management
+
+Product Description Scraping
+Extract product information, descriptions, and specifications from e-commerce sites.
+Typical Steps:
+
+Browse product catalog
+Extract product details
+Capture images and specifications
+Extract pricing information
+Store in structured format
+
+Use Cases:
+
+Product comparison
+Price monitoring
+Catalog synchronization
+Competitor analysis
+
+Document Processing Pipeline
+Automate document intake and processing workflows.
+Typical Steps:
+
+Monitor document sources
+Extract relevant information
+Validate and clean data
+Categorize documents
+Route to appropriate systems
+
+Use Cases:
+
+Invoice processing
+Contract management
+Form processing
+Data entry automation
+
+Website Content Monitoring
+Monitor websites for content changes and new information.
+Typical Steps:
+
+Periodically check website
+Detect content changes
+Extract new or updated content
+Process changes
+Trigger notifications
+
+Use Cases:
+
+Website change detection
+Content update tracking
+Competitor monitoring
+Compliance monitoring
+
+
+🛠️ Technical Requirements
+Essential
+
+n8n - Workflow automation platform
+BrowserAct - Web scraping and extraction API
+Storage - Database or cloud storage for extracted content
+
+Optional
+
+NLP Library - For text processing and summarization
+Database - For storing extracted content
+APIs - For sending data to downstream systems
+Email Service - For notifications
+Cloud Storage - For document storage
+
+
+💾 Output Formats
+Extracted content can be saved in multiple formats:
+
+JSON - Structured data format
+CSV/Excel - Spreadsheet format
+Database - SQL or NoSQL databases
+XML - Structured markup format
+Plain Text - Simple text files
+PDF - Document format
+Cloud Storage - Google Drive, AWS S3, etc.
+
+
+⚙️ Configuration Options
+Extraction Rules
+
+Define what elements to extract
+Specify selectors and patterns
+Handle nested structures
+Process specific fields
+
+Processing Options
+
+Text cleaning and normalization
+Format conversion
+Deduplication
+Filtering and validation
+
+Scheduling
+
+One-time extraction
+Recurring schedules
+Event-triggered extraction
+Real-time monitoring
+
+Error Handling
+
+Retry on failures
+Error notifications
+Fallback options
+Data validation
+
+
+📚 Learning Path
+Beginner
+
+Start with simple website extraction
+Learn basic text processing
+Understand output formats
+Set up first content collection
+
+Intermediate
+
+Handle complex website structures
+Implement text summarization
+Set up automated monitoring
+Create processing pipelines
+
+Advanced
+
+Build sophisticated extraction rules
+Implement NLP processing
+Create multi-source aggregation
+Build content management systems
+
+
+🔗 Common Integration Patterns
+With Email Services
+Send extracted content via email automatically
+With Databases
+Store extracted content in SQL or NoSQL databases
+With Cloud Storage
+Save documents to Google Drive, AWS S3, or similar
+With Chat Platforms
+Send notifications to Slack, Discord, or Teams
+With CMS Platforms
+Push extracted content to WordPress or other CMS
+With Analytics Tools
+Feed extracted data into analytics systems
+
+⚠️ Best Practices
+
+Respect robots.txt - Follow website crawling guidelines
+Handle Rate Limits - Add delays between requests
+Update Selectors - Website structures change, monitor and update
+Validate Data - Check extracted data for accuracy
+Backup Content - Keep backups of important content
+Monitor Errors - Track and fix extraction failures
+Optimize Performance - Use efficient extraction rules
+Respect Privacy - Don't extract personal data without consent
+
+
+🚀 Getting Started
+
+Choose Your Use Case - Identify what content you want to extract
+Select Workflows - Find or create appropriate workflows
+Configure Sources - Set up websites or feeds to monitor
+Define Extraction - Specify what information to extract
+Set Up Destination - Choose where to store extracted content
+Test & Monitor - Verify extraction is working correctly
+Deploy at Scale - Run production workflows
+
+
+📞 Support & Resources
+
+Workflow Documentation - See individual workflow READMEs
+n8n Docs - https://docs.n8n.io/
+BrowserAct Docs - https://www.browseract.com/
+Community Forum - https://community.n8n.io/
+
+
+🎯 Category Status
+MetricStatusCategory Status✅ ActiveWorkflow CountContinuously updatingComplexity Level⭐⭐ MediumSetup Time10-30 minutesMaintenanceLowCommunity SupportHigh
+
+🤝 Contributing
+Have a useful Content Extraction workflow? We'd love to add it!
+How to Contribute:
+
+Build and test your workflow in n8n
+Document setup instructions
+Add examples of what it extracts
+Remove sensitive credentials
+Submit a pull request
+
+
+📋 Category Contents
+Browse available workflows in this category:
+
+View All Workflows
+Browse by Use Case
+Browse by Difficulty
+
+
+Ready to automate your content extraction? 🚀
+Start with a simple workflow or explore the complete library!
