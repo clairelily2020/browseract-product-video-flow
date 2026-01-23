@@ -1,0 +1,652 @@
+{
+  "name": "BrowserAct Product Image to AI Video Automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -128
+      ],
+      "id": "bab21957-2460-4d61-be9f-365703ac5ee5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "type": "WORKFLOW",
+        "workflowId": "73948758645931553",
+        "workflowConfig": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "input-Target_URL",
+            "input-Search_Keyword",
+            "input-Data_Limit"
+          ],
+          "schema": [
+            {
+              "type": "string",
+              "display": true,
+              "defaultMatch": true,
+              "id": "input-Target_URL",
+              "displayName": "Target_URL",
+              "required": false,
+              "description": "If left blank, the default value defined in BrowserAct will be used.",
+              "removed": true
+            },
+            {
+              "type": "string",
+              "display": true,
+              "defaultMatch": true,
+              "id": "input-Search_Keyword",
+              "displayName": "Search_Keyword",
+              "required": false,
+              "description": "If left blank, the default value defined in BrowserAct will be used.",
+              "removed": true
+            },
+            {
+              "type": "string",
+              "display": true,
+              "defaultMatch": true,
+              "id": "input-Data_Limit",
+              "displayName": "Data_Limit",
+              "required": false,
+              "description": "If left blank, the default value defined in BrowserAct will be used.",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "n8n-nodes-browseract.browserAct",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -128
+      ],
+      "id": "a6b5b7fd-fe58-44ce-ab6b-c2ed4acc912f",
+      "name": "Run a workflow",
+      "credentials": {
+        "browserActApi": {
+          "id": "B9O5ngIi316K8Djm",
+          "name": "BrowserAct account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 2
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -128
+      ],
+      "id": "adaba9ad-f0c5-44a8-8d76-852a868e7bcb",
+      "name": "limit_products"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.image_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        352,
+        144
+      ],
+      "id": "4385e759-a72e-491a-ae2e-2a989347367b",
+      "name": "fetch_image"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        112,
+        128
+      ],
+      "id": "9551dca5-8348-44ce-9d93-340608cd6a6b",
+      "name": "iterate_products"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8fcbcd5d-70c8-49ba-a819-6332efaf089d",
+              "name": "prompt",
+              "value": "=Generate a professional 8-second e-commerce showcase video for this fashion/furniture item. The camera should perform a slow, elegant 360-degree pan in a bright studio to show texture and design details.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1136,
+        144
+      ],
+      "id": "b6b2366b-a97e-4392-8235-94396d6369de",
+      "name": "set_prompt"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "006f9cc1-e58b-4d90-ab44-1bef744115f3",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        384
+      ],
+      "id": "0e515cf1-27ed-4145-beda-c87a5912ff6e",
+      "name": "check_response"
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Check video generation status\"].json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        928,
+        400
+      ],
+      "id": "511608c0-ae60-4971-8173-65ebf4edcfb2",
+      "name": "download_video",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "lBXHZz1YhUIXLhiC",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $(\"iterate_products\").item.json.title }}.mp4",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1lRC0KN0DBl9lljHzPN1NyEVF60_xorMB",
+          "mode": "list",
+          "cachedResultName": "n8n video",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1lRC0KN0DBl9lljHzPN1NyEVF60_xorMB"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1136,
+        400
+      ],
+      "id": "7da2a9d2-7622-44a0-830a-0e1e7b6feaa6",
+      "name": "upload_output_video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "D9RgCEjikZmtfvWF",
+          "name": "Google Drive OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "How it works\nThis workflow uses BrowserAct to run an AI-powered browser automation that collects structured product data, including image URLs and related metadata.\n\nThe workflow then:\n\nParses the BrowserAct output into individual product items\nIterates through each product entry\nDownloads the product image and converts it into Base64 format\nSends the image together with a predefined prompt to an AI video generation API\nPolls the generation status until the video is ready\nDownloads the generated short video file\nUploads both the original product image and the generated video to Google Drive\nEach product is processed independently, making the workflow suitable for batch-based and scalable automation scenarios.\n\nSet up steps\nConnect your BrowserAct account to enable the browser-based data extraction workflow\nConnect a Google Drive account where source images and generated videos will be stored\nReview the input parameters provided by the BrowserAct node, such as target URL, search keyword, or data limit\nAdjust the product processing limit or batch size if you want to control execution time\nRun the workflow manually once to verify the output before using it in regular automation\nAdditional explanations and configuration details are provided as sticky notes directly inside the workflow.",
+        "height": 752,
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -64
+      ],
+      "id": "d81aa256-735d-4954-b162-6c9691c36075",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Title：Data collection\n\nText：Run a BrowserAct workflow to collect structured product items using real browser execution.\nThis step provides the initial data for the workflow and outputs product records containing image URLs and basic metadata for downstream processing.",
+        "height": 320,
+        "width": 832,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -272
+      ],
+      "id": "552ee742-720c-4ee9-a2d4-25b717331a5e",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTitle：Video generation\nText：Submit a video generation request using the prepared image and prompt.\nThe workflow waits and repeatedly checks generation status until the video is ready.\nThis asynchronous pattern is required and the Wait step should not be removed.",
+        "height": 320,
+        "width": 800,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        64,
+        368
+      ],
+      "id": "7b308b1e-a176-47e6-81a0-7e52fadd3dce",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": " Title：Image preparation\n Text：Download each product image and prepare it for AI video generation.\n Images are fetched individually and converted into the required format so they can be safely passed to the video generation API.",
+        "height": 320,
+        "width": 1216,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        64,
+        48
+      ],
+      "id": "f6ce5d8d-4a72-426a-9a72-87dd453cfa50",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Extract the JSON string returned by BrowserAct\nconst raw = $json.output.string;\n\n// 2. Parse it into a valid JavaScript object (array)\nlet products;\ntry {\n  products = JSON.parse(raw);\n} catch (e) {\n  throw new Error(\"JSON parse failed: \" + e.message);\n}\n\n// 3. Ensure the data is an array and convert it into n8n item format\nif (!Array.isArray(products)) {\n  throw new Error(\"Parsed data is not an array\");\n}\n\n// 4. Return the result as iterable n8n items\nreturn products.map(item => ({\n  json: item\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        -128
+      ],
+      "id": "b54a89a3-a03c-4cad-a7dd-30cb014c3d81",
+      "name": "Parse BrowserAct output"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.prompt }}\",\n      \"image\": {\n        \"mimeType\": \"image/jpeg\",\n        \"bytesBase64Encoded\":\"{{ $node['Convert image to Base64'].json.data }}\"\n      }\n    }\n  ],\n  \"parameters\": {\n    \"durationSeconds\": 8,\n    \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        112,
+        400
+      ],
+      "id": "9627fb5b-99a4-45b9-8c08-89e55a49e00b",
+      "name": "Submit video generation request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "lBXHZz1YhUIXLhiC",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 120
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        304,
+        384
+      ],
+      "id": "6cad0918-2276-4fde-8f43-1444191ebc2b",
+      "name": "Wait for video generation",
+      "webhookId": "7c7da84f-41c7-4bfe-857c-84a9da908209"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        496,
+        384
+      ],
+      "id": "80ccdb97-cdbd-4ebd-99bd-acd5a203c3cb",
+      "name": "Check video generation status",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "lBXHZz1YhUIXLhiC",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        144
+      ],
+      "id": "ec0d61c2-3ef5-4374-a6eb-dce948412770",
+      "name": "Prepare image for video generation"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        528,
+        144
+      ],
+      "id": "bc7b25cd-04e1-44e2-9ea2-90a56634ce69",
+      "name": "Convert image to Base64"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTitle：Google Drive sync\nText：Upload source images and generated videos to Google Drive.",
+        "height": 320,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        864,
+        368
+      ],
+      "id": "e59e9729-c06e-49e3-a3e0-089efae8d4c8",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "name": "={{ $(\"iterate_products\").item.json.title }}.jpg",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        912,
+        144
+      ],
+      "id": "c3c7af01-2807-42b8-8efb-6cf41c0e20ce",
+      "name": "upload_source_image",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "D9RgCEjikZmtfvWF",
+          "name": "Google Drive OAuth"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Run a workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run a workflow": {
+      "main": [
+        [
+          {
+            "node": "Parse BrowserAct output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "limit_products": {
+      "main": [
+        [
+          {
+            "node": "iterate_products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "iterate_products": {
+      "main": [
+        [],
+        [
+          {
+            "node": "iterate_products",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "fetch_image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fetch_image": {
+      "main": [
+        [
+          {
+            "node": "Convert image to Base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_prompt": {
+      "main": [
+        [
+          {
+            "node": "Submit video generation request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_response": {
+      "main": [
+        [
+          {
+            "node": "download_video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait for video generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download_video": {
+      "main": [
+        [
+          {
+            "node": "upload_output_video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload_output_video": {
+      "main": [
+        [
+          {
+            "node": "iterate_products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse BrowserAct output": {
+      "main": [
+        [
+          {
+            "node": "limit_products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit video generation request": {
+      "main": [
+        [
+          {
+            "node": "Wait for video generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for video generation": {
+      "main": [
+        [
+          {
+            "node": "Check video generation status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check video generation status": {
+      "main": [
+        [
+          {
+            "node": "check_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare image for video generation": {
+      "main": [
+        [
+          {
+            "node": "upload_source_image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert image to Base64": {
+      "main": [
+        [
+          {
+            "node": "Prepare image for video generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload_source_image": {
+      "main": [
+        [
+          {
+            "node": "set_prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "224ee203-2602-41f4-a11f-269507e5ec3e",
+  "meta": {
+    "instanceId": "8727c5985d37ac81c88b5d17199bedc005056c07551fea699d1140f95e6b10c4"
+  },
+  "id": "Tf5WXvTtXGlugu6f",
+  "tags": []
+}
